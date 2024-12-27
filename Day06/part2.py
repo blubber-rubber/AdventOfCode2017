@@ -3,7 +3,29 @@ import time
 start_time = time.time()
 
 with open('input.txt') as f:
-    lines = [line.rstrip('\n') for line in f.readlines()]
+    current_state = [int(line.rstrip('\n')) for line in f.readlines()[0].split('\t')]
 
-print(len(lines))
+states = {}
+redists = 0
+
+
+def redistribute(banks):
+    largest_index = max(range(len(banks)), key=lambda x: banks[x])
+
+    n = banks[largest_index]
+
+    banks[largest_index] = 0
+
+    for i in range(len(banks)):
+        banks[(largest_index + i + 1) % len(banks)] += n // len(banks) + (i < n % len(banks))
+
+    return banks
+
+
+while tuple(current_state) not in states:
+    states[tuple(current_state)] = redists
+    current_state = redistribute(current_state)
+    redists += 1
+
+print(redists - states[tuple(current_state)])
 print(time.time() - start_time)
