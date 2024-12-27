@@ -13,7 +13,7 @@ with open('input.txt') as f:
     lines = [line.rstrip('\n') for line in f.readlines()]
 
 for line in lines:
-    m = re.match(r'([a-z]+) \(([0-9]+)\) *(->)* *(.*)', line)
+    m = re.match(r'([a-z]+) \((\d+)\) *(->)* *(.*)', line)
     prog, w, s, lijst = m.groups()
     weights[prog] = int(w)
     programs.add(prog)
@@ -41,8 +41,6 @@ def dfs(node, weights, graph):
             weight_lijst[bad_index] = good_weight
 
     return weight + sum(weight_lijst)
-
-    return weight
 
 
 base = list(programs.difference(is_supported))[0]
