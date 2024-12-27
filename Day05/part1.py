@@ -3,7 +3,15 @@ import time
 start_time = time.time()
 
 with open('input.txt') as f:
-    lines = [line.rstrip('\n') for line in f.readlines()]
+    maze = [int(line.rstrip('\n')) for line in f.readlines()]
 
-print(len(lines))
+pos = 0
+jumps = 0
+
+while pos < len(maze):
+    jumps += 1
+    maze[pos] += 1
+    pos += maze[pos] - 1
+
+print(jumps)
 print(time.time() - start_time)
